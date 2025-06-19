@@ -63,7 +63,7 @@ def main():
 
     run = True
     while run:
-        clock.tick(20)
+        clock.tick(utils.FPS)
         screen.fill(utils.GREY)
 
         for event in pygame.event.get():  
