@@ -5,8 +5,44 @@ from levels.level1 import Level1
 from levels.level2 import Level2
 from levels.level3 import Level3
 from sounds import Sounds
+from texts import Text
 
-
+def show_menu(screen):
+    '''Меню'''
+    font = Text().font
+    
+    while True:
+        screen.fill(utils.ANTHRACITE_GREY)
+        
+        # Заголовок
+        title = font.render("Моя Игра", True, utils.WHITE)
+        screen.blit(title, (utils.WIDTH_SCREEN//2 - title.get_width()//2, 100))
+        
+        # Кнопка "Играть"
+        play_button = pygame.Rect(utils.WIDTH_SCREEN//2 - 100, 260, 200, 50)
+        pygame.draw.rect(screen, utils.GREEN, play_button)
+        play_text = font.render("Играть", True, utils.WHITE)
+        screen.blit(play_text, (utils.WIDTH_SCREEN//2 - play_text.get_width()//2, 260))
+        
+        # Кнопка "Выход"
+        exit_button = pygame.Rect(utils.WIDTH_SCREEN//2 - 100, 330, 200, 50)
+        pygame.draw.rect(screen, utils.RED, exit_button)
+        exit_text = font.render("Выход", True, utils.WHITE)
+        screen.blit(exit_text, (utils.WIDTH_SCREEN//2 - exit_text.get_width()//2, 330))
+        
+        pygame.display.update()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_button.collidepoint(event.pos):
+                    return True
+                if exit_button.collidepoint(event.pos):
+                    pygame.quit()
+                    exit()
+                
 def main():
     pygame.init()
     screen = pygame.display.set_mode((utils.WIDTH_SCREEN, utils.HEIGHT_SCREEN))
@@ -16,6 +52,8 @@ def main():
 
     sounds = Sounds()   
     sounds.play_music()
+
+    show_menu(screen)
    
     player = Player(utils.SPAWN_LOCATION_1)
     current_level_number = 1

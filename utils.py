@@ -26,6 +26,9 @@ IRON_GREY = (67, 75, 77)
 ANTHRACITE_GREY = (41, 49, 51)
 QUARTZ_GREY = (108, 105, 96)
 BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (200, 0, 0)
+GREEN = (0, 200, 0)
 
 '''Шрифты'''
 
