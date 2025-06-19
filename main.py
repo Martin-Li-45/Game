@@ -16,32 +16,34 @@ def show_menu(screen):
         
         # Заголовок
         title = font.render("Моя Игра", True, utils.WHITE)
-        screen.blit(title, (utils.WIDTH_SCREEN//2 - title.get_width()//2, 100))
+        screen.blit(title, (utils.WIDTH_SCREEN//2 - title.get_width()//2, utils.MENU_TITLE_Y))
         
         # Кнопка "Играть"
-        play_button = pygame.Rect(utils.WIDTH_SCREEN//2 - 100, 260, 200, 50)
+        play_button = pygame.Rect(utils.WIDTH_SCREEN//2 - utils.BUTTON_OFFSET_X, utils.PLAY_BUTTON_Y, 
+                                utils.BUTTON_WIDTH, utils.BUTTON_HEIGHT)
         pygame.draw.rect(screen, utils.GREEN, play_button)
         play_text = font.render("Играть", True, utils.WHITE)
-        screen.blit(play_text, (utils.WIDTH_SCREEN//2 - play_text.get_width()//2, 260))
+        screen.blit(play_text, (utils.WIDTH_SCREEN//2 - play_text.get_width()//2, utils.PLAY_BUTTON_Y))
         
         # Кнопка "Выход"
-        exit_button = pygame.Rect(utils.WIDTH_SCREEN//2 - 100, 330, 200, 50)
+        exit_button = pygame.Rect(utils.WIDTH_SCREEN//2 - utils.BUTTON_OFFSET_X, utils.EXIT_BUTTON_Y, 
+                                utils.BUTTON_WIDTH, utils.BUTTON_HEIGHT)
         pygame.draw.rect(screen, utils.RED, exit_button)
         exit_text = font.render("Выход", True, utils.WHITE)
-        screen.blit(exit_text, (utils.WIDTH_SCREEN//2 - exit_text.get_width()//2, 330))
+        screen.blit(exit_text, (utils.WIDTH_SCREEN//2 - exit_text.get_width()//2, utils.EXIT_BUTTON_Y))
         
         pygame.display.update()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
+                return False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_button.collidepoint(event.pos):
                     return True
                 if exit_button.collidepoint(event.pos):
                     pygame.quit()
-                    exit()
+                    return False
                 
 def main():
     pygame.init()
@@ -71,7 +73,7 @@ def main():
         player.player_update(current_level.platforms)
         current_level.update()
 
-        if player.rect.right > utils.WIDTH_SCREEN + 50:
+        if player.rect.right > utils.WIDTH_SCREEN + utils.COLLISION_OFFSET:
             current_level_number += 1
             if current_level_number == 2:
                 current_level = Level2(player, screen)
@@ -81,7 +83,7 @@ def main():
                 current_level = Level3(player, screen)
                 player.respawn(utils.SPAWN_LOCATION_1) 
 
-        elif player.rect.left < -50:  
+        elif player.rect.left < -utils.COLLISION_OFFSET:  
             if current_level_number > 1: 
                 current_level_number -= 1
             
